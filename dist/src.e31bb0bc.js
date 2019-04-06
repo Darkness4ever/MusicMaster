@@ -25868,6 +25868,18 @@ function (_Component) {
       };
     });
 
+    _defineProperty(_assertThisInitialized(_this), "trackIcon", function (track) {
+      if (!track.preview_url) {
+        return _react.default.createElement("span", null, "N/A");
+      }
+
+      if (_this.state.playing && _this.state.playingPreviewUrl === track.preview_url) {
+        return _react.default.createElement("span", null, " | |");
+      }
+
+      return _react.default.createElement("span", null, "\u25B6");
+    });
+
     return _this;
   }
 
@@ -25884,11 +25896,17 @@ function (_Component) {
             preview_url = track.preview_url;
         return _react.default.createElement("div", {
           key: id,
-          onClick: _this2.playAudio(preview_url)
+          onClick: _this2.playAudio(preview_url),
+          className: "track "
         }, _react.default.createElement("img", {
           src: album.images[0].url,
-          alt: "track -image"
-        }), _react.default.createElement("p", null, name));
+          alt: "track -image",
+          className: "track-image"
+        }), _react.default.createElement("p", {
+          className: "track-text"
+        }, name), _react.default.createElement("p", {
+          className: "track-icon"
+        }, _this2.trackIcon(track)));
       }));
     }
   }]);
@@ -26055,7 +26073,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "searchArtist", function (artistQuery) {
-      fetch("".concat(API_ADDRESS, "/artist/").concat(_this.artistQuery)).then(function (res) {
+      fetch("".concat(API_ADDRESS, "/artist/").concat(artistQuery)).then(function (res) {
         return res.json();
       }).then(function (json) {
         if (json.artists.total > 0) {
@@ -26084,6 +26102,11 @@ function (_Component) {
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.searchArtist('John Legend');
+    }
+  }, {
     key: "render",
     value: function render() {
       console.log('state  : ', this.state);
@@ -26216,7 +26239,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53643" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56886" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

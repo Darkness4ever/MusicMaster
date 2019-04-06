@@ -10,9 +10,12 @@ class App extends Component {
         tracks : []
     }
 
+    componentDidMount () {
+        this.searchArtist('John Legend')
+    }
 
     searchArtist = artistQuery => {
-        fetch(`${API_ADDRESS}/artist/${this.artistQuery}`)
+        fetch(`${API_ADDRESS}/artist/${ artistQuery}`)
         .then(res => res.json())
         .then(json => {
             if(json.artists.total > 0) {
